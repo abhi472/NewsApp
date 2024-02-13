@@ -47,10 +47,10 @@ public class NewsListRxUseCase {
        return getArticles(json).map(article -> {
            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                return article.updateArticle(util.INSTANCE.getAbbreviatedFromDateTime(article.getPublishedAt(),
-                       "yyyy-MM-DDThh:mm:ssZ",
-                       "DD MMM yyyy hh:mm aaa"),
+                       "yyyy-MM-ddThh:mm:ssZ",
+                       "dd MMM yyyy hh:mm aaa"),
                        article.getTitle(),
-                       article.getUrlToImage(), article.getUrl());
+                       article.getUrlToImage() == null ? "": article.getUrlToImage(), article.getUrl());
            } else return article;
        });
     }

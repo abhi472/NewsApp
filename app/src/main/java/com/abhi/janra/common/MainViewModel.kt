@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.abhi.janra.SingleLiveEvent
 import com.abhi.janra.states.MediaState
 import com.abhi.janra.usecase.NewsListRxUseCase
 import com.abhi.janra.usecase.NewsListUseCase
@@ -33,6 +34,8 @@ class MainViewModel @Inject constructor(
     private var disposable: CompositeDisposable = CompositeDisposable()
     private val _uiState = MutableStateFlow(MediaState())
     val uiState: StateFlow<MediaState> = _uiState.asStateFlow()
+    val liveEvent: SingleLiveEvent<List<Article>> = SingleLiveEvent()
+
 
     private val _search = MutableStateFlow<String>("")
 
@@ -51,6 +54,7 @@ class MainViewModel @Inject constructor(
             .filter { this::list.isInitialized }
             .onEach {
                 updateUiState(files = list.filter { it1-> it1.title.contains(it, true) })
+                liveEvent.value = list.filter { it1-> it1.title.contains(it, true) }
             }
             // flowOn(), catch{}
             .launchIn(viewModelScope)
@@ -59,10 +63,9 @@ class MainViewModel @Inject constructor(
 
     fun loadDataRx(json:String) {
         disposable.add(newsListRxUseCase.getUpdatedList(json).subscribe({
-            updateUiState(files = it, isError = false, isLoading = false, process = 3)
+            liveEvent.value = it
             list = it
         }, {
-            updateUiState(isError = true, isLoading = false, process = -3)
 
         }))
 
@@ -98,11 +101,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun updateUiState(
-         files: List<Article> = uiState.value.files,
-         isError: Boolean = uiState.value.isError,
-         isLoading: Boolean = uiState.value.isLoading,
-         process: Int = uiState.value.process, ) {
+    private fun updateUiState(
+        files: List<Article> = uiState.value.files,
+        isError: Boolean = uiState.value.isError,
+        isLoading: Boolean = uiState.value.isLoading,
+        process: Int = uiState.value.process,
+    ) {
         _uiState.value = uiState.value.copy(
             files = files,
             isError = isError,

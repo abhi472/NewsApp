@@ -5,7 +5,10 @@ package com.abhi.janra
 
 import android.content.Context
 import android.os.Build
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.text.ParseException
@@ -17,8 +20,8 @@ object util {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getAbbreviatedFromDateTime(dateTime: String,
-                                   dateFormat: String = "yyyy-MM-DDThh:mm:ssZ",
-                                   field: String = "DD MMM yyyy hh:mm aaa"): Pair<String, Long> {
+                                   dateFormat: String = "yyyy-MM-ddThh:mm:ssZ",
+                                   field: String = "dd MMM yyyy hh:mm aaa"): Pair<String, Long> {
         val output = SimpleDateFormat(field)
         try {
             val getAbbreviate = java.time.Instant.parse(dateTime)
@@ -46,5 +49,12 @@ object util {
             e.printStackTrace()
             ""
         }
+
+
+    @BindingAdapter("imageUrl")
+    @JvmStatic
+    fun loadImage(view: ImageView, url: String?) {
+        Glide.with(view.context).load(url).into(view)
+    }
 
 }
