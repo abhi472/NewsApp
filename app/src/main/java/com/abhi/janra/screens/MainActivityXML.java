@@ -7,18 +7,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import com.abhi.janra.common.Article;
 import com.abhi.janra.common.MainViewModel;
-import com.abhi.janra.states.MediaState;
 import com.abhi.janra.util;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleCoroutineScope;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -26,17 +19,11 @@ import com.abhi.janra.R;
 import com.abhi.janra.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import kotlin.Unit;
-import kotlin.coroutines.Continuation;
-import kotlinx.coroutines.flow.FlowCollector;
 
 @AndroidEntryPoint
-public class MainActivity extends AppCompatActivity {
+public class MainActivityXML extends AppCompatActivity {
 
     MainViewModel viewModel ;
 

@@ -20,18 +20,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         /*
-        * This is rx implementation
-        * */
-        util.getJsonFromDir(this, "news.json").apply {
-            viewModel.loadDataRx(this)
-        }
-
-        /*
-       * This is flow implementation, to run this, just uncommit
+       * Code changed and this activity now supports only coroutines
+       * for rx implementation set MainActivityXML
        * */
-//        util.getJsonFromDir(this, "news.json").apply {
-//            viewModel.loadData(this)
-//        }
+        util.getJsonFromDir(this, "news.json").apply {
+            viewModel.loadData(this)
+        }
 
 
         setContent {

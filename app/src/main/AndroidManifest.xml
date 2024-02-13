@@ -13,14 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JANRA"
         tools:targetApi="31">
+
+<!--        We can switch the launcher intent filter to see both xml and compose use cases
+            Currently xml implementation is default launcher
+-->
         <activity
             android:name=".common.MainActivity"
             android:exported="false"
+            android:theme="@style/Theme.JANRA"
+
             />
         <activity
-            android:name=".screens.MainActivity"
+            android:name=".screens.MainActivityXML"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.JANRA2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
